@@ -73,23 +73,21 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
+  # go through each city and check if its lat/lon fall within the coordinates
   # within will hold the cities that fall within the specified region
   within = [f"{city.name}: ({city.lat},{city.lon})" for city in cities if (lat2 <= float(city.lat) <= lat1) and (lon2 <= float(city.lon) <= lon1)]
-
-  # TODO Ensure that the lat and lon values are all floats
-  # Go through each city and check to see if it falls within 
-  # the specified coordinates.
-
   return within
 
 co_1 = str(input("Enter lat1,lon1: ")).split(',')
 co_2 = str(input("Enter lat2,lon2: ")).split(',')
 
+# assign varibles to each coordinate
 lat_1 = float(co_1[0])
 lon_1 = float(co_1[1])
 lat_2 = float(co_2[0])
 lon_2 = float(co_2[1])
 
+# reorder city_reader stretch call, passing the 'biggest' coordinate set first
 if lat_1 > lat_2:
   print(cityreader_stretch(lat_1, lon_1, lat_2, lon_2, cities))
 else:
