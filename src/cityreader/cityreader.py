@@ -33,7 +33,7 @@ def cityreader(cities=[]):
         line += 1
       # append data from consequent rows
       else:
-        cities.append(City(row[0], row[3], row[4]))
+        cities.append(City(row[0], float(row[3]), float(row[4])))
         line += 1
     return cities
 
@@ -41,7 +41,7 @@ cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line
 for c in cities:
-    print(c.name, c.lat, c.lon)
+    print(f"{c.name}, {c.lat}, {c.lon}")
 
 # STRETCH GOAL!
 #
@@ -72,12 +72,7 @@ for c in cities:
 # Tucson: (32.1558,-110.8777)
 # Salt Lake City: (40.7774,-111.9301)
 
-def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
-  # go through each city and check if its lat/lon fall within the coordinates
-  # within will hold the cities that fall within the specified region
-  within = [f"{city.name}: ({city.lat},{city.lon})" for city in cities if (lat2 <= float(city.lat) <= lat1) and (lon2 <= float(city.lon) <= lon1)]
-  return within
-
+# get user inputs
 co_1 = str(input("Enter lat1,lon1: ")).split(',')
 co_2 = str(input("Enter lat2,lon2: ")).split(',')
 
@@ -87,8 +82,24 @@ lon_1 = float(co_1[1])
 lat_2 = float(co_2[0])
 lon_2 = float(co_2[1])
 
-# reorder city_reader stretch call, passing the 'biggest' coordinate set first
+# order according to size
 if lat_1 > lat_2:
-  print(cityreader_stretch(lat_1, lon_1, lat_2, lon_2, cities))
+  l_lat = lat_1
+  l_lon = lon_1
+  s_lat = lat_2
+  s_lon= lon_2
 else:
-  print(cityreader_stretch(lat_2, lon_2, lat_1, lon_1, cities))
+  l_lat = lat_2
+  l_lon = lon_2
+  s_lat = lat_1
+  s_lon = lon_1
+
+def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
+  # go through each city and check if its lat/lon fall within the coordinates
+  # within will hold the cities that fall within the specified region
+  within = [city for city in cities if (lat2 <= city.lat <= lat1) and (lon2 <= city.lon <= lon1)]
+  return within
+
+res = cityreader_stretch(l_lat, l_lon, s_lat, s_lon, cities)
+for city in res:
+  print(f"{city.name}: ({city.lat},{city.lon})")
