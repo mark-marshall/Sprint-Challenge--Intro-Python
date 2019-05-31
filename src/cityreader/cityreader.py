@@ -26,6 +26,7 @@ def cityreader(cities=[]):
     c_contents = csv.reader(c_csv, delimiter=',')
     line = 0
   # For each city record, create a new City instance and add it to the 
+  # `cities` list
     for row in c_contents:
       # skip the first row of headers
       if line == 0:
@@ -34,7 +35,6 @@ def cityreader(cities=[]):
       else:
         cities.append(City(row[0], row[3], row[4]))
         line += 1
-  # `cities` list
     return cities
 
 cityreader(cities)
